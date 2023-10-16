@@ -9,11 +9,13 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.118.2">
-    <title>Dashboard Template · Bootstrap v5.3</title>
+    <link rel="icon" type="image" href="assets/images/favicon.png">
+    <title>Sistem Informasi Gaji</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
     <style>
       .bd-placeholder-img {
@@ -100,6 +102,13 @@
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
   </head>
+
+  <style>
+    .dataTables_filter {
+        display: none;
+    }
+  </style>
+
   <body class="d-flex align-items-center py-4 bg-body-tertiary">
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
       <symbol id="check2" viewBox="0 0 16 16">
@@ -203,167 +212,125 @@
       </symbol>
     </svg>
 
-    <!-- Halaman Login -->
-    <main class="form-signin w-100 m-auto">
-      <form>
-        <img class="mb-4" src="assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-        <div class="form-floating">
-          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-          <label for="floatingInput">Email address</label>
-        </div>
-        <div class="form-floating">
-          <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-          <label for="floatingPassword">Password</label>
-        </div>
-
-        <div class="form-check text-start my-3">
-          <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-          <label class="form-check-label" for="flexCheckDefault">
-            Remember me
-          </label>
-        </div>
-        <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
-        <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2023</p>
-      </form>
-    </main>
 <div class="container-fluid">
   <!-- Sidebar Admin CMS -->
   <div class="row">
-    <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary" style="display: none;">
+    <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
       <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3" style="height: 640px;">
           <div class="row d-flex justify-content-center">
-            <h1 class="text-center">JPT</h1>
+            <h1 class="text-center">SIGK</h1>
           </div>
           <hr>
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" id="a_homepage">
-                <svg class="bi"><use xlink:href="#house-fill"/></svg>
-                Home
+          <ul class="nav flex-column menu-page-area">
+            <li class="nav-item menu-karyawan" style="cursor: pointer;">
+              <a class="nav-link d-flex align-items-center gap-2" onclick="menuhandle(this.id)" id="halamankaryawan">
+                <svg class="bi"><use xlink:href="#cart"/></svg>
+                Halaman Karyawan
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" id="a_produk">
-                <svg class="bi"><use xlink:href="#cart"/></svg>
-                Produk
+            <li class="nav-item menu-admin" style="cursor: pointer;">
+              <a class="nav-link d-flex align-items-center gap-2" onclick="menuhandle(this.id)" aria-current="page" id="laporangaji">
+                <svg class="bi"><use xlink:href="#house-fill"/></svg>
+                Laporan Gaji
               </a>
-            </li>            
+            </li>
+            <li class="nav-item" style="cursor: pointer;">
+              <a href="/sistem-informasi-gaji/" class="nav-link d-flex align-items-center gap-2" aria-current="page">
+                <svg class="bi"><use xlink:href="#house-fill"/></svg>
+                Sign Out
+              </a>
+            </li>
           </ul>
         </div>
       </div>
     </div>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="display: none;">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h2 class="text-center">SISTEM INFORMASI GAJI</h2>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <!-- Halaman Dashboard -->
+      <div class="row" id="menu-page-dashboard">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h2 class="text-center">Dashboard</h2>
+        </div>
+        <h3>Selamat Datang <span class="txt-realname-user"></span></h3>
+        <p>Aplikasi sistem informasi gaji ini digunakan untuk mengecheck gaji karyawan, untuk info lebih lanjut silahkan pilih menu disamping terima kasih.</p>
       </div>
-      <!-- Login Page -->
-      <div class="row" id="home" style="display: none;">
+      <!-- Halaman Laporan Gaji -->
+      <div class="row menu-admin" style="display: none;" id="laporan-gaji">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h2 class="text-center">Laporan Gaji</h2>
+        </div>
         <div class="col-md-12">
-          <h3>Sistem Informasi Gaji</h3>
-          <ul>
-            <li>
-              pernikahan
-            </li>
-            <li>
-              pesta
-            </li>
-            <li>
-              acara korporat
-            </li>
-            <li>
-              dan masih banyak lagi.
-            </li>
-          </ul>
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            <div class="col">
-              <div class="card shadow-sm">
-                <img width="100%" height="225px" src="https://filebroker-cdn.lazada.co.id/kf/S50e7daef79524df1ba02c8f2c420d92fY.jpg">
-                <div class="card-body">
-                  <p class="card-text fw-bold text-center">Contoh tenda pernikahan</p>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <img width="100%" height="225px" src="https://image1ws.indotrading.com/s3/productimages/webp/co55766/p949512/w425-h425/1ca7169c-013a-4a82-a197-172196bb7bd2.jpg">
-                <div class="card-body">
-                  <p class="card-text fw-bold text-center">Contoh tenda pesta</p>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card shadow-sm">
-                <img width="100%" height="225px" src="https://siber77.id/wp-content/uploads/2022/11/Screenshot_20221126-094542_1.jpg">
-                <div class="card-body">
-                  <p class="card-text fw-bold text-center">Contoh tenda acara korporat</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div class="mb-2">
+            <label for="searchInput" class="form-label">Pencarian:</label>
+            <input type="text" id="searchInput" class="form-control" placeholder="Silahkan ketik sesuatu disini...">
+        </div>
+          <table id="myDataTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Umur</th>
+                    <th>Jabatan</th>
+                    <th>Gaji</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Hardian</td>
+                    <td>45</td>
+                    <td>HRD</td>
+                    <td>Rp. 7,000,000,-</td>
+                </tr>
+                <tr>
+                    <td>Supri</td>
+                    <td>30</td>
+                    <td>Admin Senior</td>
+                    <td>Rp. 4,000,000,-</td>
+                </tr>
+                <tr>
+                    <td>Doni</td>
+                    <td>25</td>
+                    <td>Admin Junior</td>
+                    <td>Rp. 3,5000,000,-</td>
+                </tr>
+            </tbody>
+        </table>        
         </div>
       </div>
-      <!-- Admin CMS Page -->
-      <div class="row" id="produk" style="display: none;">
-        <div class="pricing-header p-3 pb-md-4 mx-auto">
-          <p class="fs-5 text-body-secondary">
-            Berikut adalah daftar paket yang dapat anda pesan untuk tenda yang digunakan, untuk pemesanan jenis produk yang dapat dipesan.
-          </p>
+      <div class="row menu-karyawan" style="display: none;" id="halaman-karyawan">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h2 class="text-center">Halaman Karyawan</h2>
         </div>
-        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-          <div class="col">
-            <div class="card mb-4 rounded-3 shadow-sm">
-              <div class="card-header py-3">
-                <h4 class="my-0 fw-normal">Tenda Paket Rumahan</h4>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title pricing-card-title">Rp. 500,000<small class="text-body-secondary fw-light">/hari</small></h3>
-                <ul class="list-unstyled mt-3 mb-4">
-                  <li>1 Set Tenda</li>
-                  <li>Gratis Pilih Warna Tenda</li>
-                  <li>Gratis Pasang</li>
-                  <li>&nbsp;</li>
-                </ul>
-                <button type="button" class="w-100 btn btn-lg btn-success btn-order-contact">Hubungi Kami</button>
-              </div>
-            </div>
+        <div class="row">
+          <div class="col-md-2">
+            Nama
           </div>
           <div class="col">
-            <div class="card mb-4 rounded-3 shadow-sm">
-              <div class="card-header py-3">
-                <h4 class="my-0 fw-normal">Tenda Paket Kantoran</h4>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title pricing-card-title">Rp. 1,000,000<small class="text-body-secondary fw-light">/hari</small></h3>
-                <ul class="list-unstyled mt-3 mb-4">
-                  <li>3 Set Tenda</li>
-                  <li>Gratis Pilih warna</li>
-                  <li>Gratis Pemasangan</li>
-                  <li>Jaminan Jika Ada Hujan</li>
-                </ul>
-                <button type="button" class="w-100 btn btn-lg btn-warning btn-order-contact">Hubungi Kami</button>
-              </div>
-            </div>
+            : <span class="txt-realname-user"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            Umur
           </div>
           <div class="col">
-            <div class="card mb-4 rounded-3 shadow-sm border-danger">
-              <div class="card-header py-3 text-bg-danger border-danger">
-                <h4 class="my-0 fw-normal">Tenda Paket Pemerintahan</h4>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title pricing-card-title">Rp. 5,000,000<small class="text-body-secondary fw-light">/hari</small></h3>
-                <ul class="list-unstyled mt-3 mb-4">
-                  <li>10 Set Tenda</li>
-                  <li>Gratis Pilih Warna</li>
-                  <li>Gratis Pemasangan</li>
-                  <li>Jaminan Jika Ada Hujan</li>
-                </ul>
-                <button type="button" class="w-100 btn btn-lg btn-danger btn-order-contact">Hubungi Kami</button>
-              </div>
-            </div>
+            : <span class="txt-umur-karyawan"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            Jabatan
+          </div>
+          <div class="col">
+            : <span class="txt-jabatan-karyawan"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            Gaji
+          </div>
+          <div class="col">
+            : Rp. <span class="txt-gaji-karyawan"></span>,-
           </div>
         </div>
       </div>
@@ -371,27 +338,67 @@
   </div>
 </div>
 <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
-<script src="dashboard.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">
-  $("#a_homepage").on('click',function(){
-    $(this).addClass('active');
-    $("#a_produk").removeClass('active')
-    $("#home").show();
-    $("#produk").hide();
+
+  // Menu Clicking Handle
+  function menuhandle(id){
+    
+    switch (id) {
+      case 'halamankaryawan':
+        $("#menu-page-dashboard").hide();
+        $("#halaman-karyawan").show();
+        $("#laporan-gaji").hide();
+        break;
+      case 'laporangaji':
+        $("#menu-page-dashboard").hide();
+        $("#halaman-karyawan").hide();
+        $("#laporan-gaji").show();
+        break;
+      default:
+        break;
+    }
+  }
+  
+  $(document).ready(function () {
+    $('#myDataTable').DataTable({
+        "paging": false, // Disable pagination
+    });
+
+    $('#searchInput').on('keyup', function () {
+        $('#myDataTable').DataTable().search(this.value).draw();
+    });
+
+
+    // Paramter
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Retrieve the value of a specific parameter
+    const user_level = urlParams.get('user');
+    const user_realname = urlParams.get('name').charAt(0).toUpperCase() + urlParams.get('name').slice(1);
+    const user_age      = urlParams.get('umur');
+    const user_jabatan  = urlParams.get('jabatan').charAt(0).toUpperCase() + urlParams.get('jabatan').slice(1);
+    const user_gaji     = parseFloat(urlParams.get('gaji')).toLocaleString();
+
+    // Validasi menu user
+    switch (user_level) {
+      case 'admin':
+        break;
+      case 'karyawan' :
+        $('.menu-admin').hide();
+        break;
+      default:
+        break;
+    }
+
+    $(".txt-realname-user").html(user_realname);
+    $(".txt-umur-karyawan").html(user_age);
+    $(".txt-jabatan-karyawan").html(user_jabatan);
+    $(".txt-gaji-karyawan").html(user_gaji);
   });
 
-  $("#a_produk").on('click',function(){
-    $(this).addClass('active');
-    $("#a_homepage").removeClass('active')
-    $("#home").hide();
-    $("#produk").show();
-  });
-
-  $(".btn-order-contact").on('click',function(){
-    alert('Silahkan Hubungi Kita di : \n 0821-1234-5678')
-  });
 </script>
 </body>
 </html>

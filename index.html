@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.118.2">
-  <link rel="icon" type="image" href="assets/images/favicon.png">
+    <link rel="icon" type="image" href="assets/images/favicon.png">
     <title>Sistem Informasi Gaji</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
@@ -189,11 +189,33 @@
     <script type="text/javascript">
 
       $("#btn-signin-default").on('click',function(){
+
+        var username = $("#txt-email").val();
+        var password = $("#txt-password").val();
+
+        if(username == '' || password == ''){
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Username atau password tidak boleh kosong.',
+          });
+          return;
+        }
+        if(
+          username == 'admin@email.com' && password == 'admin' || 
+          username == 'karyawan1@email.com' && password == 'admin' || 
+          username == 'karyawan2@email.com' && password == 'admin'){
+          if(username == 'admin@email.com'){ $("#btn-admin-auth").click(); return;}
+          if(username == 'karyawan1@email.com'){ $("#btn-karyawan1-auth").click(); return;}
+          if(username == 'karyawan2@email.com'){ $("#btn-karyawan2-auth").click(); return;}
+        }
+
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Mohon maaf untuk login default tidak dapat digunakan, silahkan gunakan login sebagai admin / karyawan',
+          text: 'Mohon maaf username / password tidak ditemukan, silahkan coba kembali',
         });
+        return;
       });
 
       $("#btn-admin-auth").on('click',function(){
@@ -222,7 +244,7 @@
         }).then((result) => {
           $("#txt-email").val('');
           $("#txt-password").val('');
-          window.location.href = "admin.html?user=admin";
+          window.location.href = "admin.html?user=admin&name=hardian&umur=45&jabatan=hrd&gaji=7000000";
         })
       });
 
@@ -252,7 +274,7 @@
         }).then((result) => {
           $("#txt-email").val('');
           $("#txt-password").val('');
-          window.location.href = "admin.html?user=karyawan1";
+          window.location.href = "admin.html?user=karyawan&name=supri&umur=30&jabatan=admin senior&gaji=4000000";
         })
       });
 
@@ -282,7 +304,7 @@
         }).then((result) => {
           $("#txt-email").val('');
           $("#txt-password").val('');
-          window.location.href = "admin.html?user=karyawan2";
+          window.location.href = "admin.html?user=karyawan&name=doni&umur=25&jabatan=admin junior&gaji=3500000";
         })
       });
 
